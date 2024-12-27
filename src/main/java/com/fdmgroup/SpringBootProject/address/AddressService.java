@@ -13,11 +13,15 @@ import com.google.gson.Gson;
 @Service
 public class AddressService {
 
+	@Autowired
 	private AddressRepository addressRepo;
 	private final RestTemplate restTemplate;
 	private final Gson gson;
 
-	@Autowired
+	public List<Address> getAddress() {
+		return addressRepo.findAll();
+	}
+
 	public AddressService(AddressRepository addressRepo, RestTemplate restTemplate, Gson gson) {
 		super();
 		this.addressRepo = addressRepo;
@@ -25,16 +29,11 @@ public class AddressService {
 		this.gson = gson;
 	}
 
-	public List<Address> getAddress() {
-		return addressRepo.findAll();
-	}
-
 	public PostalResponse postalLookUp(String postalCode) {
 		String url = "https://geocode.ca/?locate=" + postalCode + "&json=1";
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
 		String gson = response.getBody();
-		//postalResponse=gson.from();
+		// postalResponse=gson.from()gson;
 		return null;
 	}
-
 }
