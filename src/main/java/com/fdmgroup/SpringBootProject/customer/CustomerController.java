@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fdmgroup.SpringBootProject.address.AddressService;
+import com.fdmgroup.SpringBootProject.address.PostalResponse;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,13 +29,11 @@ public class CustomerController {
 	@Autowired
 	public CustomerController(CustomerService customerService) {
 		super();
-		System.out.println("Customer controller constructed");
 		this.customerService = customerService;
 	}
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> getCustomers() {
-		System.out.println("Hello from GetCustomers");
 		List<Customer> customers = customerService.getCustomers();
 		return ResponseEntity.ok(customers);
 	}
@@ -58,7 +59,6 @@ public class CustomerController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Customer> getCustomer(@PathVariable long id) {
-		System.out.println("from id");
 		Customer customer = customerService.getCustomer(id);
 		return ResponseEntity.ok(customer);
 	}
