@@ -6,7 +6,7 @@ public class PostalResponse {
 
 	@JsonProperty("standard.city")
 	String city;
-	
+
 	@JsonProperty("standard.prov")
 	String province;
 
