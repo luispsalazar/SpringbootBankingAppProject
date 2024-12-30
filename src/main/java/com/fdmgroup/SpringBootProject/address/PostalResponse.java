@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PostalResponse {
 
 	@JsonProperty("standard.city")
-	String city;
+	private String city;
 
 	@JsonProperty("standard.prov")
-	String province;
+	private String province;
 
 	public String getCity() {
 		return city;
