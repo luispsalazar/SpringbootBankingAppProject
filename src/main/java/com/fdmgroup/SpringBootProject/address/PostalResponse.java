@@ -4,25 +4,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PostalResponse {
 
-	@JsonProperty("standard.city")
-	private String city;
+//	@JsonProperty("standard.city")
+//	private String city;
+//
+//	@JsonProperty("standard.prov")
+//	private String province;
 
-	@JsonProperty("standard.prov")
-	private String province;
+	private String postalCode;
 
-	public String getCity() {
-		return city;
+	public PostalResponse(String postalCode) {
+		super();
+		this.postalCode = postalCode;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public String getPostalCode() {
+		return postalCode;
 	}
 
-	public String getProvince() {
-		return province;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+//	public String getCity() {
+//		return city;
+//	}
+//
+//	public void setCity(String city) {
+//		this.city = city;
+//	}
+//
+//	public String getProvince() {
+//		return province;
+//	}
+//
+//	public void setProvince(String province) {
+//		this.province = province;
+//	}
 }

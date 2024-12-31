@@ -20,9 +20,15 @@ public class AddressController {
 		this.addressService = addressService;
 	}
 
+//	@GetMapping("/{id}")
+//	public ResponseEntity<PostalResponse> getPostalInfo(@PathVariable String id) {
+//		PostalResponse response = addressService.postalLookUp(id);
+//		return ResponseEntity.ok(response);
+//	}
+
 	@GetMapping("/{id}")
-	public ResponseEntity<PostalResponse> getPostalInfo(@PathVariable String id) {
-		PostalResponse response = addressService.postalLookUp(id);
+	public ResponseEntity<String> getPostalInfo(@PathVariable String id) {
+		String response = addressService.postalLookUp(id);
 		return ResponseEntity.ok(response);
 	}
 }

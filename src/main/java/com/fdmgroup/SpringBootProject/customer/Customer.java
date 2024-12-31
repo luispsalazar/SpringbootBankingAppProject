@@ -1,45 +1,42 @@
 package com.fdmgroup.SpringBootProject.customer;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import com.fdmgroup.SpringBootProject.account.Account;
+import com.fdmgroup.SpringBootProject.address.Address;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Customer {
+public abstract class Customer {
 
 	@Id
 	private long customerId;
 	private String name;
-	private String streetNumber;
-	private String city;
-	private String province;
-	private String postalCode;
+	private Address address;
+	private List<Account> accounts;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(long customerId, String name, String streetNumber, String city, String province,
-			String postalCode) {
+	public Customer(String name, Address address, List<Account> accounts) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.setAccounts(accounts);
+	}
+
+	public Customer(long customerId, String name, Address address, List<Account> accounts) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
-		this.streetNumber = streetNumber;
-		this.city = city;
-		this.province = province;
-		this.postalCode = postalCode;
-	}
-
-	public Customer(String name, String streetNumber, String city, String province, String postalCode) {
-		super();
-		this.name = name;
-		this.streetNumber = streetNumber;
-		this.city = city;
-		this.province = province;
-		this.postalCode = postalCode;
+		this.address = address;
+		this.setAccounts(accounts);
 	}
 
 	public long getCustomerId() {
@@ -58,41 +55,17 @@ public class Customer {
 		this.name = name;
 	}
 
-	public String getStreetNumber() {
-		return streetNumber;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStreetNumber(String streetNumber) {
-		this.streetNumber = streetNumber;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(city, customerId, name, postalCode, province, streetNumber);
+		return Objects.hash(address, customerId, name);
 	}
 
 	@Override
@@ -104,14 +77,20 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(city, other.city) && customerId == other.customerId && Objects.equals(name, other.name)
-				&& Objects.equals(postalCode, other.postalCode) && Objects.equals(province, other.province)
-				&& Objects.equals(streetNumber, other.streetNumber);
+		return Objects.equals(address, other.address) && customerId == other.customerId
+				&& Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", name=" + name + ", streetNumber=" + streetNumber + ", city="
-				+ city + ", province=" + province + ", postalCode=" + postalCode + "]";
+		return "Customer [customerId=" + customerId + ", name=" + name + ", address=" + address + "]";
+	}
+
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 }

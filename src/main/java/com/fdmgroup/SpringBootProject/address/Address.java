@@ -1,17 +1,24 @@
 package com.fdmgroup.SpringBootProject.address;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "ADDRESS")
 public class Address {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ_GEN")
+	@SequenceGenerator(name = "ADDRESS_SEQ_GEN", sequenceName = "ADDRESS_SEQ")
 	private String addressId;
-	private String streetAddress;
+	private String streetNumber;
+	private String city;
 	private String province;
 	private String postalCode;
-	private String city;
 
 	public String getAddressId() {
 		return addressId;
@@ -21,12 +28,12 @@ public class Address {
 		this.addressId = addressId;
 	}
 
-	public String getStreetAddress() {
-		return streetAddress;
+	public String getStreetNumber() {
+		return streetNumber;
 	}
 
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
+	public void setStreetNumber(String streetNumber) {
+		this.streetNumber = streetNumber;
 	}
 
 	public String getProvince() {
@@ -55,7 +62,7 @@ public class Address {
 
 	@Override
 	public String toString() {
-		return "Address [addressId=" + addressId + ", streetAddress=" + streetAddress + ", province=" + province
+		return "Address [addressId=" + addressId + ", streetNumber=" + streetNumber + ", province=" + province
 				+ ", postalCode=" + postalCode + ", city=" + city + "]";
 	}
 }
