@@ -39,8 +39,8 @@ public class CustomerController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) {
-		Customer createdCustomer = customerService.createCustomer(customer);
+	public ResponseEntity<Customer> createCustomer(@Valid @RequestBody TellerCreatesCustomer request) {
+		Customer createdCustomer = customerService.createCustomer(request);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdCustomer.getCustomerId()).toUri();
 		return ResponseEntity.created(location).body(createdCustomer);

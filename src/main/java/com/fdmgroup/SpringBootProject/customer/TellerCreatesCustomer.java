@@ -5,7 +5,14 @@ public class TellerCreatesCustomer {
 	private String name;
 	private String streetNumber;
 	private String postalCode;
+	private boolean isPerson;
 		
+	public boolean isPerson() {
+		return isPerson;
+	}
+	public void setPerson(boolean isPerson) {
+		this.isPerson = isPerson;
+	}
 	public String getName() {
 		return name;
 	}

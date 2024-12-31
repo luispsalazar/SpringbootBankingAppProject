@@ -10,14 +10,20 @@ import com.fdmgroup.SpringBootProject.address.Address;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
+//@MappedSuperclass
 public abstract class Customer {
 
 	@Id
 	private long customerId;
 	private String name;
+	@OneToOne
 	private Address address;
+	@OneToMany
 	private List<Account> accounts;
 
 	public Customer() {

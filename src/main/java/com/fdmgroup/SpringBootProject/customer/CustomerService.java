@@ -6,15 +6,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fdmgroup.SpringBootProject.address.Address;
+import com.fdmgroup.SpringBootProject.address.AddressRepository;
+
 @Service
 public class CustomerService {
 
 	private CustomerRepository customerRepo;
+	private AddressRepository addressRepo;
 
 	@Autowired
-	public CustomerService(CustomerRepository customerRepo) {
+	public CustomerService(CustomerRepository customerRepo, AddressRepository addressRepo) {
 		super();
 		this.customerRepo = customerRepo;
+		this.addressRepo = addressRepo;
 	}
 
 	public List<Customer> getCustomers() {
@@ -34,11 +39,20 @@ public class CustomerService {
 	}
 
 	public Customer createCustomer(TellerCreatesCustomer request) {
-		Customer customer = new Customer();
+
+		Customer customer;
+		if (request.isPerson()) {
+			customer = new Person();
+		} else {
+			customer = new Company();
+		}
+		Address address = addressRepo.save(new Address());
+		address.setPostalCode(request.getPostalCode());
+		address.setStreetNumber(request.getStreetNumber());
 		customer.setName(request.getName());
-		customer.setPostalCode(request.getPostalCode());
-		customer.setStreetNumber(request.getStreetNumber());
-		return customerRepo.save(null);
+		customer.setAddress(address);
+
+		return customerRepo.save(customer);
 	}
 
 	public Customer updateCustomer(Customer customer) {
@@ -49,9 +63,11 @@ public class CustomerService {
 		Customer customer = customerRepo.findById(id)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 		customer.setName(request.getName());
-		customer.setCity(request.getCity());
-		customer.setProvince(request.getProvince());
-		customer.setPostalCode(request.getPostalCode());
+		Address address = customer.getAddress();
+		address.setPostalCode(request.getPostalCode());
+		address.setCity(request.getCity());
+		address.setProvince(request.getProvince());
+
 		return customerRepo.save(customer);
 	}
 
