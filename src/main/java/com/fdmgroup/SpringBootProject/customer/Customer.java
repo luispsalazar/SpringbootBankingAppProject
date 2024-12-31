@@ -8,41 +8,64 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fdmgroup.SpringBootProject.account.Account;
 import com.fdmgroup.SpringBootProject.address.Address;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-//@MappedSuperclass
+@Table(name = "CUSTOMER")
 public abstract class Customer {
 
 	@Id
+	@Column(name = "CUSTOMER_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUSTOMER_SEQ_GEN")
+	@SequenceGenerator(name = "CUSTOMER_SEQ_GEN", sequenceName = "CUSTOMER_SEQ", allocationSize = 1001)
 	private long customerId;
+
+	@NotNull
+	@Column(name = "CUSTOMER_NAME")
 	private String name;
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "FK_ADDRESS_ID")
+	@NotNull
 	private Address address;
-	@OneToMany
+
+	@OneToMany(mappedBy = "customer")
 	private List<Account> accounts;
+
+	private String type;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(String name, Address address, List<Account> accounts) {
+	public Customer(@NotNull String name, @NotNull Address address, List<Account> accounts, String type) {
 		super();
 		this.name = name;
 		this.address = address;
-		this.setAccounts(accounts);
+		this.accounts = accounts;
+		this.type = type;
 	}
 
-	public Customer(long customerId, String name, Address address, List<Account> accounts) {
+	public Customer(long customerId, @NotNull String name, @NotNull Address address, List<Account> accounts,
+			String type) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
 		this.address = address;
-		this.setAccounts(accounts);
+		this.accounts = accounts;
+		this.type = type;
 	}
 
 	public long getCustomerId() {
@@ -69,9 +92,25 @@ public abstract class Customer {
 		this.address = address;
 	}
 
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(address, customerId, name);
+		return Objects.hash(accounts, address, customerId, name, type);
 	}
 
 	@Override
@@ -83,20 +122,14 @@ public abstract class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(address, other.address) && customerId == other.customerId
-				&& Objects.equals(name, other.name);
+		return Objects.equals(accounts, other.accounts) && Objects.equals(address, other.address)
+				&& customerId == other.customerId && Objects.equals(name, other.name)
+				&& Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", name=" + name + ", address=" + address + "]";
-	}
-
-	public List<Account> getAccounts() {
-		return accounts;
-	}
-
-	public void setAccounts(List<Account> accounts) {
-		this.accounts = accounts;
+		return "Customer [customerId=" + customerId + ", name=" + name + ", address=" + address + ", accounts="
+				+ accounts + ", type=" + type + "]";
 	}
 }

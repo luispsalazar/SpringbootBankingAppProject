@@ -2,8 +2,15 @@ package com.fdmgroup.SpringBootProject.account;
 
 import com.fdmgroup.SpringBootProject.customer.Customer;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "CHECKING_ACCOUNT")
 public class CheckingAccount extends Account {
 
+	@NotNull
 	private int nextCheckNumber;
 
 	public CheckingAccount(long accountId, double balance, Customer customer, int nextCheckNumber) {

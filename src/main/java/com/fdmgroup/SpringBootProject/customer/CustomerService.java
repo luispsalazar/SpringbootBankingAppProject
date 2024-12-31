@@ -41,7 +41,7 @@ public class CustomerService {
 	public Customer createCustomer(TellerCreatesCustomer request) {
 
 		Customer customer;
-		if (request.isPerson()) {
+		if (request.getType().equals("person")) {
 			customer = new Person();
 		} else {
 			customer = new Company();

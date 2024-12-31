@@ -1,11 +1,13 @@
 package com.fdmgroup.SpringBootProject.address;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ADDRESS")
@@ -14,10 +16,23 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ_GEN")
 	@SequenceGenerator(name = "ADDRESS_SEQ_GEN", sequenceName = "ADDRESS_SEQ")
+	@Column(name = "ADDRESS_ID")
 	private String addressId;
+
+	@NotNull
+	@Column(name = "STREET_NUMBER")
 	private String streetNumber;
+
+	@NotNull
+	@Column(name = "CITY")
 	private String city;
+
+	@NotNull
+	@Column(name = "PROVINCE")
 	private String province;
+
+	@NotNull
+	@Column(name = "POSTAL_CODE")
 	private String postalCode;
 
 	public String getAddressId() {
