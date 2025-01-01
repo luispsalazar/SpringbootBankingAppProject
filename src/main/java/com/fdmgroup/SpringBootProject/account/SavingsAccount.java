@@ -3,12 +3,16 @@ package com.fdmgroup.SpringBootProject.account;
 import com.fdmgroup.SpringBootProject.customer.Customer;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "SAVINGS_ACCOUNT")
 public class SavingsAccount extends Account {
+
+	@Id
+	private long accountId;
 
 	@NotNull
 	private double interestRate;

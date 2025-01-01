@@ -3,6 +3,7 @@ package com.fdmgroup.SpringBootProject.customer;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fdmgroup.SpringBootProject.account.Account;
@@ -44,24 +45,26 @@ public abstract class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<Account> accounts;
 
+	@NotNull
+	@Column(name = "CUSTOMER_TYPE")
 	private String type;
 
 	public Customer() {
 		super();
 	}
 
-	public Customer(@NotNull String name, @NotNull Address address, List<Account> accounts, String type) {
+	public Customer(long customerId, @NotNull String name, @NotNull Address address, List<Account> accounts,
+			@NotNull String type) {
 		super();
+		this.customerId = customerId;
 		this.name = name;
 		this.address = address;
 		this.accounts = accounts;
 		this.type = type;
 	}
 
-	public Customer(long customerId, @NotNull String name, @NotNull Address address, List<Account> accounts,
-			String type) {
+	public Customer(@NotNull String name, @NotNull Address address, List<Account> accounts, @NotNull String type) {
 		super();
-		this.customerId = customerId;
 		this.name = name;
 		this.address = address;
 		this.accounts = accounts;

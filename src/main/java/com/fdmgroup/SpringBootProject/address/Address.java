@@ -1,5 +1,7 @@
 package com.fdmgroup.SpringBootProject.address;
 
+import org.hibernate.annotations.UuidGenerator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,8 +16,11 @@ import jakarta.validation.constraints.NotNull;
 public class Address {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ_GEN")
-	@SequenceGenerator(name = "ADDRESS_SEQ_GEN", sequenceName = "ADDRESS_SEQ")
+	@UuidGenerator
+
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ_GEN")
+//	@SequenceGenerator(name = "ADDRESS_SEQ_GEN", sequenceName = "ADDRESS_SEQ")
 	@Column(name = "ADDRESS_ID")
 	private String addressId;
 
