@@ -17,14 +17,13 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-//@MappedSuperclass
 @Table(name = "ACCOUNT")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Account {
 
 	@Id
 	@Column(name = "ACCOUNT_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCOUNT_SEQ_GEN")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ACCOUNT_SEQ_GEN")
 	@SequenceGenerator(name = "ACCOUNT_SEQ_GEN", sequenceName = "ACCOUNT_SEQ")
 	private long accountId;
 
@@ -36,9 +35,19 @@ public abstract class Account {
 	@JoinColumn(name = "FK_CUST_ID")
 	private Customer customer;
 
-	public Account(long accountId, double balance, Customer customer) {
+	public Account() {
+		super();
+	}
+
+	public Account(long accountId, @NotNull double balance, Customer customer) {
 		super();
 		this.accountId = accountId;
+		this.balance = balance;
+		this.customer = customer;
+	}
+
+	public Account(@NotNull double balance, Customer customer) {
+		super();
 		this.balance = balance;
 		this.customer = customer;
 	}

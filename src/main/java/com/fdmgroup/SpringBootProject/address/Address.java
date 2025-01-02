@@ -4,10 +4,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -39,6 +36,29 @@ public class Address {
 	@NotNull
 	@Column(name = "POSTAL_CODE")
 	private String postalCode;
+
+	public Address() {
+		super();
+	}
+
+	public Address(@NotNull String streetNumber, @NotNull String city, @NotNull String province,
+			@NotNull String postalCode) {
+		super();
+		this.streetNumber = streetNumber;
+		this.city = city;
+		this.province = province;
+		this.postalCode = postalCode;
+	}
+
+	public Address(String addressId, @NotNull String streetNumber, @NotNull String city, @NotNull String province,
+			@NotNull String postalCode) {
+		super();
+		this.addressId = addressId;
+		this.streetNumber = streetNumber;
+		this.city = city;
+		this.province = province;
+		this.postalCode = postalCode;
+	}
 
 	public String getAddressId() {
 		return addressId;
